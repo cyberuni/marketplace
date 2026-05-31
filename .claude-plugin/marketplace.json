@@ -1,0 +1,82 @@
+{
+  "name": "cyberuni",
+  "owner": {
+    "name": "cyberuni",
+    "email": "unional.with.ai@gmail.com"
+  },
+  "description": "Cyberuni Claude Code plugins for research workflows and agent skills",
+  "plugins": [
+    {
+      "name": "research-workbench",
+      "source": {
+        "source": "github",
+        "repo": "cyberuni/research-workbench"
+      },
+      "description": "Durable research workflows and community post authoring for AI coding agents.",
+      "author": { "name": "unional" },
+      "homepage": "https://github.com/cyberuni/research-workbench",
+      "repository": "https://github.com/cyberuni/research-workbench",
+      "license": "MIT",
+      "category": "research"
+    },
+    {
+      "name": "skill-discovery",
+      "source": {
+        "source": "github",
+        "repo": "cyberuni/cyber-skills"
+      },
+      "description": "Find and evaluate skills before installing. Prefer global install (-g).",
+      "skills": ["./skills/find-awesome-skill", "./skills/audit-skill"],
+      "strict": false,
+      "category": "skills",
+      "homepage": "https://github.com/cyberuni/cyber-skills",
+      "repository": "https://github.com/cyberuni/cyber-skills"
+    },
+    {
+      "name": "skill-authoring",
+      "source": {
+        "source": "github",
+        "repo": "cyberuni/cyber-skills"
+      },
+      "description": "Create, generalize, patch, persona, and audit skills. Prefer global install (-g).",
+      "skills": [
+        "./skills/create-skill",
+        "./skills/create-persona-skill",
+        "./skills/create-universal-plugin",
+        "./skills/skillify",
+        "./skills/patch-skill",
+        "./skills/audit-skill"
+      ],
+      "strict": false,
+      "category": "skills",
+      "homepage": "https://github.com/cyberuni/cyber-skills",
+      "repository": "https://github.com/cyberuni/cyber-skills"
+    },
+    {
+      "name": "agent-initialization",
+      "source": {
+        "source": "github",
+        "repo": "cyberuni/cyber-skills"
+      },
+      "description": "One-time repo setup. init and init-commit-discipline: global (-g); commit: project.",
+      "skills": ["./skills/init", "./skills/init-commit-discipline", "./skills/commit"],
+      "strict": false,
+      "category": "setup",
+      "homepage": "https://github.com/cyberuni/cyber-skills",
+      "repository": "https://github.com/cyberuni/cyber-skills"
+    },
+    {
+      "name": "awesome-list-maintenance",
+      "source": {
+        "source": "github",
+        "repo": "cyberuni/cyber-skills"
+      },
+      "description": "Manage curated awesome-list sources and entries. configure-awesome-sources: global; update-awesome-list: project.",
+      "skills": ["./skills/configure-awesome-sources", "./skills/update-awesome-list"],
+      "strict": false,
+      "category": "productivity",
+      "homepage": "https://github.com/cyberuni/cyber-skills",
+      "repository": "https://github.com/cyberuni/cyber-skills"
+    }
+  ]
+}
