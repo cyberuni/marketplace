@@ -1,8 +1,8 @@
 {
   "name": "cyberuni",
   "owner": {
-    "name": "cyberuni",
-    "email": "unional.with.ai@gmail.com"
+    "name": "unional",
+    "email": "homawong@gmail.com"
   },
   "description": "Cyberuni Claude Code plugins for research workflows and agent skills",
   "plugins": [
