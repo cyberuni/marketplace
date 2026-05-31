@@ -9,8 +9,8 @@
     {
       "name": "research-workbench",
       "source": {
-        "source": "github",
-        "repo": "cyberuni/research-workbench"
+        "source": "url",
+        "url": "https://github.com/cyberuni/research-workbench.git"
       },
       "description": "Durable research workflows and community post authoring for AI coding agents.",
       "author": { "name": "unional" },
@@ -22,8 +22,8 @@
     {
       "name": "skill-discovery",
       "source": {
-        "source": "github",
-        "repo": "cyberuni/cyber-skills"
+        "source": "url",
+        "url": "https://github.com/cyberuni/cyber-skills.git"
       },
       "description": "Find and evaluate skills before installing. Prefer global install (-g).",
       "skills": ["./skills/find-awesome-skill", "./skills/audit-skill"],
@@ -35,8 +35,8 @@
     {
       "name": "skill-authoring",
       "source": {
-        "source": "github",
-        "repo": "cyberuni/cyber-skills"
+        "source": "url",
+        "url": "https://github.com/cyberuni/cyber-skills.git"
       },
       "description": "Create, generalize, patch, persona, and audit skills. Prefer global install (-g).",
       "skills": [
@@ -55,8 +55,8 @@
     {
       "name": "agent-initialization",
       "source": {
-        "source": "github",
-        "repo": "cyberuni/cyber-skills"
+        "source": "url",
+        "url": "https://github.com/cyberuni/cyber-skills.git"
       },
       "description": "One-time repo setup. init and init-commit-discipline: global (-g); commit: project.",
       "skills": ["./skills/init", "./skills/init-commit-discipline", "./skills/commit"],
@@ -68,8 +68,8 @@
     {
       "name": "awesome-list-maintenance",
       "source": {
-        "source": "github",
-        "repo": "cyberuni/cyber-skills"
+        "source": "url",
+        "url": "https://github.com/cyberuni/cyber-skills.git"
       },
       "description": "Manage curated awesome-list sources and entries. configure-awesome-sources: global; update-awesome-list: project.",
       "skills": ["./skills/configure-awesome-sources", "./skills/update-awesome-list"],
