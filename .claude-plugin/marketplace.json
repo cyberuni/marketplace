@@ -77,6 +77,19 @@
       "category": "productivity",
       "homepage": "https://github.com/cyberuni/cyber-skills",
       "repository": "https://github.com/cyberuni/cyber-skills"
+    },
+    {
+      "name": "universal-agent-plugin",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/cyberuni/cyber-universal-agent-plugin.git"
+      },
+      "description": "Scaffold a universal AI coding agent plugin that targets Claude Code, Cursor, Codex, and GitHub Copilot CLI from a single source of truth.",
+      "skills": ["./skills/create-universal-plugin"],
+      "strict": false,
+      "category": "plugin-authoring",
+      "homepage": "https://github.com/cyberuni/cyber-universal-agent-plugin",
+      "repository": "https://github.com/cyberuni/cyber-universal-agent-plugin"
     }
   ]
 }
