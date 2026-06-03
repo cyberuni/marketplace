@@ -85,7 +85,7 @@
         "url": "https://github.com/cyberuni/cyber-universal-agent-plugin.git"
       },
       "description": "Scaffold a universal AI coding agent plugin that targets Claude Code, Cursor, Codex, and GitHub Copilot CLI from a single source of truth.",
-      "skills": ["./skills/create-universal-plugin"],
+      "skills": ["./skills/universal-plugin"],
       "strict": false,
       "category": "plugin-authoring",
       "homepage": "https://github.com/cyberuni/cyber-universal-agent-plugin",
