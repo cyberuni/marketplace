@@ -2,7 +2,15 @@
 
 Plugin catalog for Claude Code. Install curated plugins with a single command.
 
-## Install a Plugin
+## Usage
+
+Add the marketplace:
+
+```sh
+claude plugin marketplace add cyberuni/marketplace
+```
+
+Then install any plugin:
 
 ```sh
 claude plugin install <plugin-name>@cyberuni
