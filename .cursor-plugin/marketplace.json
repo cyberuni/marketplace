@@ -1,0 +1,27 @@
+{
+  "name": "cyberuni",
+  "owner": {
+    "name": "unional",
+    "email": "homawong@gmail.com"
+  },
+  "metadata": {
+    "description": "Cyberuni Cursor plugins for research workflows and agent skills"
+  },
+  "plugins": [
+    {
+      "name": "research-workbench",
+      "source": { "source": "url", "url": "https://github.com/cyberuni/research-workbench.git" },
+      "description": "Durable research workflows and community post authoring for AI coding agents."
+    },
+    {
+      "name": "cyber-skills",
+      "source": { "source": "url", "url": "https://github.com/cyberuni/cyber-skills.git" },
+      "description": "Skill discovery, authoring, agent initialization, and awesome-list maintenance bundles."
+    },
+    {
+      "name": "universal-agent-plugin",
+      "source": { "source": "url", "url": "https://github.com/cyberuni/cyber-universal-agent-plugin.git" },
+      "description": "Scaffold a universal AI coding agent plugin that targets Claude Code, Cursor, Codex, and GitHub Copilot CLI from a single source of truth."
+    }
+  ]
+}
