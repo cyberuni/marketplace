@@ -92,6 +92,19 @@
       "license": "MIT",
       "skills": ["./skills/universal-plugin", "./skills/publish-universal-plugin"],
       "category": "plugin-authoring"
+    },
+    {
+      "name": "cyber-asana",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/cyberuni/cyber-asana.git"
+      },
+      "description": "Asana CLI and MCP server for AI agents",
+      "author": { "name": "unional" },
+      "homepage": "https://github.com/cyberuni/cyber-asana",
+      "repository": "https://github.com/cyberuni/cyber-asana",
+      "license": "MIT",
+      "category": "productivity"
     }
   ]
 }
