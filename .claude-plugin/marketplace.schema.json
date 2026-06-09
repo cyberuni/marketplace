@@ -1,0 +1,121 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/cyberuni/marketplace/main/.claude-plugin/marketplace.schema.json",
+  "title": "Claude Code Marketplace",
+  "type": "object",
+  "required": ["name", "plugins"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "name": {
+      "type": "string",
+      "description": "Unique slug for this marketplace"
+    },
+    "owner": {
+      "type": "object",
+      "required": ["name"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" }
+      }
+    },
+    "description": { "type": "string" },
+    "plugins": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/plugin" }
+    }
+  },
+  "$defs": {
+    "plugin": {
+      "type": "object",
+      "required": ["name", "source", "description"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "source": { "$ref": "#/$defs/source" },
+        "description": { "type": "string" },
+        "skills": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "strict": { "type": "boolean" },
+        "category": {
+          "type": "string",
+          "enum": ["research", "skills", "setup", "productivity", "plugin-authoring"]
+        },
+        "homepage": { "type": "string", "format": "uri" },
+        "repository": { "type": "string", "format": "uri" },
+        "license": { "type": "string" },
+        "author": {
+          "type": "object",
+          "required": ["name"],
+          "additionalProperties": false,
+          "properties": {
+            "name": { "type": "string" },
+            "email": { "type": "string", "format": "email" },
+            "url": { "type": "string", "format": "uri" }
+          }
+        }
+      }
+    },
+    "source": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["source", "url"],
+          "additionalProperties": false,
+          "properties": {
+            "source": { "const": "url" },
+            "url": { "type": "string", "format": "uri" },
+            "headers": { "type": "object" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["source", "repo"],
+          "additionalProperties": false,
+          "properties": {
+            "source": { "const": "github" },
+            "repo": { "type": "string" },
+            "ref": { "type": "string" },
+            "path": { "type": "string" },
+            "sparsePaths": { "type": "array", "items": { "type": "string" } },
+            "skipLfs": { "type": "boolean" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["source", "url"],
+          "additionalProperties": false,
+          "properties": {
+            "source": { "const": "git" },
+            "url": { "type": "string", "format": "uri" },
+            "ref": { "type": "string" },
+            "path": { "type": "string" },
+            "sparsePaths": { "type": "array", "items": { "type": "string" } },
+            "skipLfs": { "type": "boolean" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["source", "path"],
+          "additionalProperties": false,
+          "properties": {
+            "source": { "const": "file" },
+            "path": { "type": "string" }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["source", "path"],
+          "additionalProperties": false,
+          "properties": {
+            "source": { "const": "directory" },
+            "path": { "type": "string" }
+          }
+        }
+      ]
+    }
+  }
+}
