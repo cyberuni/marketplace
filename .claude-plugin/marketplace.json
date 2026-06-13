@@ -109,8 +109,9 @@
     {
       "name": "p1",
       "source": {
+        "source": "git-subdir",
         "url": "https://github.com/cyberuni/aa.git",
-        "path": "./mono/p1"
+        "path": "mono/p1"
       },
       "description": "test aa p1",
       "author": { "name": "unional" },
@@ -122,8 +123,9 @@
     {
       "name": "p2",
       "source": {
+        "source": "git-subdir",
         "url": "https://github.com/cyberuni/aa.git",
-        "path": "./mono/p2"
+        "path": "mono/p2"
       },
       "description": "test aa p2",
       "author": { "name": "unional" },
