@@ -82,7 +82,7 @@
     {
       "name": "universal-plugin",
       "source": {
-        "source": "url",
+        "source": "git",
         "url": "https://github.com/cyberuni/universal-plugin.git"
       },
       "description": "Research and design toolkit for building universal AI coding agent plugins that work across Claude Code, Cursor, Codex, and GitHub Copilot CLI.",
@@ -103,6 +103,19 @@
       "author": { "name": "unional" },
       "homepage": "https://github.com/cyberuni/cyber-asana",
       "repository": "https://github.com/cyberuni/cyber-asana",
+      "license": "MIT",
+      "category": "productivity"
+    },
+    {
+      "name": "test-aa",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/cyberuni/aa.git"
+      },
+      "description": "test aa plugin",
+      "author": { "name": "unional" },
+      "homepage": "https://github.com/cyberuni/aa",
+      "repository": "https://github.com/cyberuni/aa",
       "license": "MIT",
       "category": "productivity"
     }
