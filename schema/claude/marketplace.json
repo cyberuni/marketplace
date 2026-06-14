@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "https://raw.githubusercontent.com/cyberuni/marketplace/main/.claude-plugin/marketplace.schema.json",
+  "$id": "https://raw.githubusercontent.com/cyberuni/marketplace/main/schema/claude/marketplace.json",
   "title": "Claude Code Marketplace",
   "type": "object",
   "required": ["name", "owner", "plugins"],

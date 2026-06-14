@@ -1,0 +1,248 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/cyberuni/marketplace/main/schema/claude/plugin.json",
+  "title": "Claude Code plugin manifest",
+  "type": "object",
+  "required": ["name"],
+  "additionalProperties": true,
+  "properties": {
+    "$schema": { "type": "string", "format": "uri" },
+    "name": {
+      "type": "string",
+      "description": "Unique identifier (kebab-case, no spaces).",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "displayName": { "type": "string" },
+    "version": { "type": "string" },
+    "description": { "type": "string" },
+    "author": { "$ref": "#/definitions/author" },
+    "homepage": { "type": "string", "format": "uri" },
+    "repository": { "type": "string", "format": "uri" },
+    "license": { "type": "string" },
+    "keywords": { "type": "array", "items": { "type": "string" } },
+    "defaultEnabled": { "type": "boolean" },
+    "skills": { "$ref": "#/definitions/pathOrPathArray" },
+    "commands": { "$ref": "#/definitions/pathOrPathArray" },
+    "agents": { "$ref": "#/definitions/pathOrPathArray" },
+    "hooks": { "$ref": "#/definitions/hooksRef" },
+    "mcpServers": { "$ref": "#/definitions/mcpServersRef" },
+    "outputStyles": { "$ref": "#/definitions/pathOrPathArray" },
+    "lspServers": { "$ref": "#/definitions/lspServersRef" },
+    "experimental": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "themes": { "$ref": "#/definitions/pathOrPathArray" },
+        "monitors": { "$ref": "#/definitions/pathOrPathArray" }
+      }
+    },
+    "userConfig": { "$ref": "#/definitions/userConfigMap" },
+    "channels": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/channel" }
+    },
+    "dependencies": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/dependency" }
+    }
+  },
+  "definitions": {
+    "relativePath": { "type": "string", "pattern": "^\\./.+" },
+    "pathOrPathArray": {
+      "oneOf": [
+        { "$ref": "#/definitions/relativePath" },
+        { "type": "array", "items": { "$ref": "#/definitions/relativePath" } }
+      ]
+    },
+    "author": {
+      "oneOf": [
+        { "type": "string" },
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "name": { "type": "string" },
+            "email": { "type": "string", "format": "email" },
+            "url": { "type": "string", "format": "uri" }
+          }
+        }
+      ]
+    },
+    "hooksRef": {
+      "oneOf": [
+        { "$ref": "#/definitions/relativePath" },
+        { "type": "array", "items": { "$ref": "#/definitions/relativePath" } },
+        { "$ref": "#/definitions/hookEventMap" }
+      ]
+    },
+    "hookEventMap": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "SessionStart": { "$ref": "#/definitions/hookMatcherArray" },
+        "Setup": { "$ref": "#/definitions/hookMatcherArray" },
+        "UserPromptSubmit": { "$ref": "#/definitions/hookMatcherArray" },
+        "UserPromptExpansion": { "$ref": "#/definitions/hookMatcherArray" },
+        "PreToolUse": { "$ref": "#/definitions/hookMatcherArray" },
+        "PermissionRequest": { "$ref": "#/definitions/hookMatcherArray" },
+        "PermissionDenied": { "$ref": "#/definitions/hookMatcherArray" },
+        "PostToolUse": { "$ref": "#/definitions/hookMatcherArray" },
+        "PostToolUseFailure": { "$ref": "#/definitions/hookMatcherArray" },
+        "PostToolBatch": { "$ref": "#/definitions/hookMatcherArray" },
+        "Notification": { "$ref": "#/definitions/hookMatcherArray" },
+        "MessageDisplay": { "$ref": "#/definitions/hookMatcherArray" },
+        "SubagentStart": { "$ref": "#/definitions/hookMatcherArray" },
+        "SubagentStop": { "$ref": "#/definitions/hookMatcherArray" },
+        "TaskCreated": { "$ref": "#/definitions/hookMatcherArray" },
+        "TaskCompleted": { "$ref": "#/definitions/hookMatcherArray" },
+        "Stop": { "$ref": "#/definitions/hookMatcherArray" },
+        "StopFailure": { "$ref": "#/definitions/hookMatcherArray" },
+        "TeammateIdle": { "$ref": "#/definitions/hookMatcherArray" },
+        "InstructionsLoaded": { "$ref": "#/definitions/hookMatcherArray" },
+        "ConfigChange": { "$ref": "#/definitions/hookMatcherArray" },
+        "CwdChanged": { "$ref": "#/definitions/hookMatcherArray" },
+        "FileChanged": { "$ref": "#/definitions/hookMatcherArray" },
+        "WorktreeCreate": { "$ref": "#/definitions/hookMatcherArray" },
+        "WorktreeRemove": { "$ref": "#/definitions/hookMatcherArray" },
+        "PreCompact": { "$ref": "#/definitions/hookMatcherArray" },
+        "PostCompact": { "$ref": "#/definitions/hookMatcherArray" },
+        "Elicitation": { "$ref": "#/definitions/hookMatcherArray" },
+        "ElicitationResult": { "$ref": "#/definitions/hookMatcherArray" },
+        "SessionEnd": { "$ref": "#/definitions/hookMatcherArray" }
+      }
+    },
+    "hookMatcherArray": {
+      "type": "array",
+      "items": { "$ref": "#/definitions/hookMatcher" }
+    },
+    "hookMatcher": {
+      "type": "object",
+      "required": ["hooks"],
+      "additionalProperties": true,
+      "properties": {
+        "matcher": { "type": "string" },
+        "hooks": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/hookAction" }
+        }
+      }
+    },
+    "hookAction": {
+      "type": "object",
+      "required": ["type"],
+      "additionalProperties": true,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["command", "http", "mcp_tool", "prompt", "agent"]
+        }
+      }
+    },
+    "mcpServersRef": {
+      "oneOf": [
+        { "$ref": "#/definitions/relativePath" },
+        { "type": "array", "items": { "$ref": "#/definitions/relativePath" } },
+        { "$ref": "#/definitions/mcpServersMap" }
+      ]
+    },
+    "mcpServersMap": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/definitions/mcpServerConfig" }
+    },
+    "mcpServerConfig": {
+      "type": "object",
+      "required": ["command"],
+      "additionalProperties": true,
+      "properties": {
+        "command": { "type": "string" },
+        "args": { "type": "array", "items": { "type": "string" } },
+        "env": { "type": "object", "additionalProperties": { "type": "string" } },
+        "cwd": { "type": "string" }
+      }
+    },
+    "lspServersRef": {
+      "oneOf": [
+        { "$ref": "#/definitions/relativePath" },
+        { "type": "array", "items": { "$ref": "#/definitions/relativePath" } },
+        { "$ref": "#/definitions/lspServersMap" }
+      ]
+    },
+    "lspServersMap": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/definitions/lspServerConfig" }
+    },
+    "lspServerConfig": {
+      "type": "object",
+      "required": ["command", "extensionToLanguage"],
+      "additionalProperties": true,
+      "properties": {
+        "command": { "type": "string" },
+        "args": { "type": "array", "items": { "type": "string" } },
+        "extensionToLanguage": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": { "type": "string" }
+        },
+        "transport": { "type": "string", "enum": ["stdio", "socket"] },
+        "env": { "type": "object", "additionalProperties": { "type": "string" } },
+        "initializationOptions": {},
+        "settings": {},
+        "workspaceFolder": { "type": "string" },
+        "startupTimeout": { "type": "integer", "minimum": 0 },
+        "maxRestarts": { "type": "integer", "minimum": 0 },
+        "diagnostics": { "type": "boolean" }
+      }
+    },
+    "userConfigMap": {
+      "type": "object",
+      "patternProperties": {
+        "^[A-Za-z_][A-Za-z0-9_]*$": { "$ref": "#/definitions/userConfigOption" }
+      },
+      "additionalProperties": false
+    },
+    "userConfigOption": {
+      "type": "object",
+      "required": ["type", "title", "description"],
+      "additionalProperties": true,
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["string", "number", "boolean", "directory", "file"]
+        },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "sensitive": { "type": "boolean" },
+        "required": { "type": "boolean" },
+        "default": {},
+        "multiple": { "type": "boolean" },
+        "min": { "type": "number" },
+        "max": { "type": "number" }
+      }
+    },
+    "channel": {
+      "type": "object",
+      "required": ["server"],
+      "additionalProperties": true,
+      "properties": {
+        "server": { "type": "string" },
+        "userConfig": { "$ref": "#/definitions/userConfigMap" }
+      }
+    },
+    "dependency": {
+      "oneOf": [
+        { "type": "string" },
+        {
+          "type": "object",
+          "required": ["name"],
+          "additionalProperties": true,
+          "properties": {
+            "name": { "type": "string" },
+            "version": { "type": "string" }
+          }
+        }
+      ]
+    }
+  }
+}
