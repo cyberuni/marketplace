@@ -3,13 +3,14 @@
   "$id": "https://raw.githubusercontent.com/cyberuni/marketplace/main/.claude-plugin/marketplace.schema.json",
   "title": "Claude Code Marketplace",
   "type": "object",
-  "required": ["name", "plugins"],
+  "required": ["name", "owner", "plugins"],
   "additionalProperties": false,
   "properties": {
     "$schema": { "type": "string" },
     "name": {
       "type": "string",
-      "description": "Unique slug for this marketplace"
+      "description": "Unique slug for this marketplace",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
     },
     "owner": {
       "type": "object",
@@ -21,6 +22,20 @@
       }
     },
     "description": { "type": "string" },
+    "version": { "type": "string" },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "pluginRoot": { "type": "string" },
+        "description": { "type": "string" },
+        "version": { "type": "string" }
+      }
+    },
+    "allowCrossMarketplaceDependenciesOn": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
     "plugins": {
       "type": "array",
       "items": { "$ref": "#/$defs/plugin" }
@@ -29,20 +44,65 @@
   "$defs": {
     "plugin": {
       "type": "object",
-      "required": ["name", "source", "description"],
-      "additionalProperties": false,
+      "required": ["name", "source"],
+      "additionalProperties": true,
       "properties": {
-        "name": { "type": "string" },
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "displayName": { "type": "string" },
         "source": { "$ref": "#/$defs/source" },
         "description": { "type": "string" },
+        "version": { "type": "string" },
         "skills": {
+          "oneOf": [
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          ]
+        },
+        "commands": {
+          "oneOf": [
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          ]
+        },
+        "agents": {
+          "oneOf": [
+            { "type": "string" },
+            {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          ]
+        },
+        "hooks": {
+          "oneOf": [{ "type": "string" }, { "type": "object" }]
+        },
+        "mcpServers": {
+          "oneOf": [{ "type": "string" }, { "type": "object" }]
+        },
+        "lspServers": {
+          "oneOf": [{ "type": "string" }, { "type": "object" }]
+        },
+        "keywords": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "tags": {
           "type": "array",
           "items": { "type": "string" }
         },
         "strict": { "type": "boolean" },
+        "defaultEnabled": { "type": "boolean" },
         "category": {
-          "type": "string",
-          "enum": ["research", "skills", "setup", "productivity", "plugin-authoring"]
+          "type": "string"
         },
         "homepage": { "type": "string", "format": "uri" },
         "repository": { "type": "string", "format": "uri" },
@@ -50,11 +110,10 @@
         "author": {
           "type": "object",
           "required": ["name"],
-          "additionalProperties": false,
+          "additionalProperties": true,
           "properties": {
             "name": { "type": "string" },
-            "email": { "type": "string", "format": "email" },
-            "url": { "type": "string", "format": "uri" }
+            "email": { "type": "string", "format": "email" }
           }
         }
       }
@@ -62,13 +121,19 @@
     "source": {
       "oneOf": [
         {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!.*\\.\\.).+$"
+        },
+        {
           "type": "object",
           "required": ["source", "url"],
           "additionalProperties": false,
           "properties": {
             "source": { "const": "url" },
             "url": { "type": "string", "format": "uri" },
-            "headers": { "type": "object" }
+            "ref": { "type": "string" },
+            "sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" }
           }
         },
         {
@@ -79,40 +144,31 @@
             "source": { "const": "github" },
             "repo": { "type": "string" },
             "ref": { "type": "string" },
-            "path": { "type": "string" },
-            "sparsePaths": { "type": "array", "items": { "type": "string" } },
-            "skipLfs": { "type": "boolean" }
+            "sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" }
           }
         },
         {
           "type": "object",
-          "required": ["source", "url"],
+          "required": ["source", "url", "path"],
           "additionalProperties": false,
           "properties": {
-            "source": { "const": "git" },
+            "source": { "const": "git-subdir" },
             "url": { "type": "string", "format": "uri" },
             "ref": { "type": "string" },
+            "sha": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
             "path": { "type": "string" },
-            "sparsePaths": { "type": "array", "items": { "type": "string" } },
-            "skipLfs": { "type": "boolean" }
+            "minProperties": 3
           }
         },
         {
           "type": "object",
-          "required": ["source", "path"],
+          "required": ["source", "package"],
           "additionalProperties": false,
           "properties": {
-            "source": { "const": "file" },
-            "path": { "type": "string" }
-          }
-        },
-        {
-          "type": "object",
-          "required": ["source", "path"],
-          "additionalProperties": false,
-          "properties": {
-            "source": { "const": "directory" },
-            "path": { "type": "string" }
+            "source": { "const": "npm" },
+            "package": { "type": "string" },
+            "version": { "type": "string" },
+            "registry": { "type": "string", "format": "uri" }
           }
         }
       ]
